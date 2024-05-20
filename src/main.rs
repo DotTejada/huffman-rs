@@ -2,7 +2,7 @@ use std::collections::HashMap;
 use std::collections::BinaryHeap;
 use core::cmp::Ordering;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(dead_code)]
 struct Node {
     freq: (char, i32),
@@ -15,18 +15,16 @@ fn make_node(key: char, value: i32) -> Node {
     Node { freq: (key, value), left: None, right: None }
 }
 
-//fn find_codes(n: Node) {
-//    if n.left.is_some() {
-//        println!("{:#?}", n);
-//        find_codes(*n.left.unwrap());
-//    } else if n.right.is_some() {
-//        println!("{:#?}", n);
-//        find_codes(*n.right.unwrap());
-//    } else {
-//        println!("{:#?}", n);
-//        return
-//    }
-//}
+fn find_codes(n: Node) {
+    let mut stack: Vec<Node> = vec![n];
+    while stack.len() > 0 {
+        let current = stack.pop().unwrap();
+        println!("{:?}", current.freq.0);
+
+        if current.right.is_some() { stack.push(*current.right.unwrap()) }
+        if current.left.is_some() { stack.push(*current.left.unwrap()) }
+    }
+}
 
 impl Ord for Node {
     fn cmp(&self, other: &Self) -> Ordering {
@@ -74,5 +72,6 @@ fn main() {
         parent.right = Some(Box::new(right));
         heap.push(parent);
     }
-    println!("{:#?}", heap);
+    //println!("{:#?}", heap);
+    find_codes(heap.pop().unwrap())
 }
