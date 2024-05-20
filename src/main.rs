@@ -1,6 +1,5 @@
 use std::collections::HashMap;
 use std::collections::BinaryHeap;
-use std::cmp::Reverse;
 use core::cmp::Ordering;
 
 #[derive(Debug)]
@@ -16,13 +15,22 @@ fn make_node(key: char, value: i32) -> Node {
     Node { freq: (key, value), left: None, right: None }
 }
 
-fn find_codes(heap: BinaryHeap<Reverse<Node>>) {
-    println!("{:#?}", heap);
-}
+//fn find_codes(n: Node) {
+//    if n.left.is_some() {
+//        println!("{:#?}", n);
+//        find_codes(*n.left.unwrap());
+//    } else if n.right.is_some() {
+//        println!("{:#?}", n);
+//        find_codes(*n.right.unwrap());
+//    } else {
+//        println!("{:#?}", n);
+//        return
+//    }
+//}
 
 impl Ord for Node {
     fn cmp(&self, other: &Self) -> Ordering {
-        self.freq.1.cmp(&other.freq.1)
+        other.freq.1.cmp(&self.freq.1)
     }
 }
 
@@ -53,17 +61,18 @@ fn main() {
     for (key, value) in &freqs {
         println!("{key}: {value}");
         let n = make_node(*key, *value);
-        heap.push(Reverse(n));
+        heap.push(n);
     }
 
+    println!("{:#?}", heap);
+
     while heap.len() != 1 {
-        let left = heap.pop().unwrap().0;
-        let right = heap.pop().unwrap().0;
+        let left = heap.pop().unwrap();
+        let right = heap.pop().unwrap();
         let mut parent = make_node('P', left.freq.1 + right.freq.1);
         parent.left = Some(Box::new(left));
         parent.right = Some(Box::new(right));
-        heap.push(Reverse(parent));
+        heap.push(parent);
     }
-
-    find_codes(heap);
+    println!("{:#?}", heap);
 }
