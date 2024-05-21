@@ -19,7 +19,7 @@ fn find_codes(n: Node) {
     let mut stack: Vec<Node> = vec![n];
     while stack.len() > 0 {
         let current = stack.pop().unwrap();
-        println!("{:?}", current.freq.0);
+        println!("{:?}: {:?}", current.freq.0, current.freq.1);
 
         if current.right.is_some() { stack.push(*current.right.unwrap()) }
         if current.left.is_some() { stack.push(*current.left.unwrap()) }
@@ -50,19 +50,19 @@ fn main() {
 
     let mut freqs: HashMap<char, i32> = HashMap::new();
     let mut heap = BinaryHeap::new();
-    let input: String = String::from("abcdbbaadaa");
+    let input: String = String::from("avadakadavra");
 
     for c in input.chars() {
         freqs.entry(c).and_modify(|c| *c += 1).or_insert(1);
     };
 
     for (key, value) in &freqs {
-        println!("{key}: {value}");
+        //println!("{key}: {value}");
         let n = make_node(*key, *value);
         heap.push(n);
     }
 
-    println!("{:#?}", heap);
+    //println!("{:#?}", heap);
 
     while heap.len() != 1 {
         let left = heap.pop().unwrap();
@@ -72,6 +72,6 @@ fn main() {
         parent.right = Some(Box::new(right));
         heap.push(parent);
     }
-    //println!("{:#?}", heap);
+    println!("{:#?}", heap);
     find_codes(heap.pop().unwrap())
 }
