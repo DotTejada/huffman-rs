@@ -7,7 +7,7 @@ use core::cmp::Ordering;
 struct Node {
     freq: (char, i32),
     left: Option<Box<Node>>,
-    right: Option<Box<Node>>
+    right: Option<Box<Node>>,
 }
 
 #[allow(dead_code)]
@@ -88,33 +88,40 @@ fn main() {
     //println!("{:#?}", heap);
     let tree = traverse(heap.pop().unwrap());
     println!("{:?}", tree);
-
-    let mut i: usize = 1;
-    let mut lcount: u8 = 0;
-    let mut pcount: u8 = 0;
-    let mut code = String::new();
-    while i < tree.len() {
-        match tree[i].2 {
-            "parent" => { 
-                pcount += 1;
-                if pcount == 1 {
-                    code.push('0'); 
-                    i += 1; 
-                } else {
-                }
-                lcount = 0;
-            },
-            "leaf" => { 
-                lcount += 1;
-                if lcount == 1 {
-                    code.push('0'); 
-                } else {
-                    code.push('1'); 
-                }
-                println!("{:?}: {:?}", tree[i].0, code); 
-                code.pop(); 
-            },
-            _ => unreachable!()
-        }
-    }
+//
+//    let mut i: usize = 1;
+//    let mut lcount: u8 = 0;
+//    let mut pcount: u8 = 1;
+//    let mut code = String::new();
+//    while i < tree.len() {
+//        match tree[i].2 {
+//            "parent" => { 
+//                pcount += 1;
+//                if pcount == 2 && lcount == 0 {
+//                    code.push('0'); 
+//                    i += 1; 
+//                } else if pcount == 2 && lcount == 1 {
+//                    code.push('1'); 
+//                    i += 1; 
+//                } else if pcount > 2 && lcount == 0 {
+//                    code.push('0');
+//                    i += 1;
+//                }
+//                lcount = 0;
+//            },
+//            "leaf" => { 
+//                lcount += 1;
+//                if lcount == 1 {
+//                    code.push('0'); 
+//                } else {
+//                    code.push('1'); 
+//                }
+//                println!("{:?}: {:?}", tree[i].0, code); 
+//                code.pop(); 
+//                i += 1; 
+//            },
+//            _ => unreachable!()
+//        }
+//    }
+//
 }
